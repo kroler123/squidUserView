@@ -74,7 +74,7 @@ pipeline {
 					label: 'Информаця о пользователе'
 					)
 				}
-				echo "Салон - $number ,Пользователь - $user ,Пароль - $pass"
+				echo "Салон - $number ,Пользователь - $userSquid ,Пароль - $passSquid"
 			}
 		}
 
