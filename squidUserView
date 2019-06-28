@@ -8,7 +8,7 @@ pipeline {
 
 		string (name: 'number', defaultValue: 'null',description: 'Впишите номер салона')
 
-		choice (name: 'act',choices['view','add'],description:'view - посмотреть пользователей, add - добавить пользователя')
+		choice (name: 'act',choices:['view','add'],description:'view - посмотреть пользователей, add - добавить пользователя')
 
 		string (name: 'user',defaultValue: '',description: 'Впишите имя пользователя')
 
