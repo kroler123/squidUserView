@@ -14,7 +14,7 @@ pipeline {
 
 		string (name: 'passSquid',defaultValue: '',description: 'Впишите пароль для нового пользователя')
 
-		string (name: 'comment',defaultValue: 'null',description: 'Напишите обоснование для создание пользователя')
+		string (name: 'comment',defaultValue: '',description: 'Напишите обоснование для создание пользователя')
 	}
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
