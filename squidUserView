@@ -37,10 +37,12 @@ pipeline {
 					sh (script:'''
 					while read line; do
 						$ip=`echo $line | awk '{print $0}'`
+						echo "ip = $ip"
 						$type=`echo $line | awk '{print $1}'`
 					done < DB
+					echo "type = $type"
 					if [ "$type" == "Devil" ];then
-						ssh -o \'StrictHostKeyChecking no\' root@"$ip" cat /etc/SQUID-AUTH/InternetUsers
+						ssh -o \'StrictHostKeyChecking no\' root@$ip cat /etc/SQUID-AUTH/InternetUsers
 					else
 						echo "Это Edge router на нём нет proxy"
 					fi
