@@ -6,13 +6,13 @@ pipeline {
 	}
 	parameters {
 
-		string (name: 'number', default: 'null', label: 'Впишите номер салона')
+		string (name: 'number', defaultValue: 'null', label: 'Впишите номер салона')
 
 		choice (name: '',choices['view','add'], label:'view - посмотреть пользователей, add - добавить пользователя')
 
-		string (name: 'user',default: '',label: 'Впишите имя пользователя')
+		string (name: 'user',defaultValue: '',label: 'Впишите имя пользователя')
 
-		string (name: 'pass',default: '',label: 'Впишите пароль для нового пользователя')
+		string (name: 'pass',defaultValue: '',label: 'Впишите пароль для нового пользователя')
 	}
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
