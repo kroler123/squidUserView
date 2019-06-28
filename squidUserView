@@ -36,9 +36,9 @@ pipeline {
 				script {
 					sh (script:'''
 					while read line; do
-						$ip=`echo $line | awk '{print $0}'`
+						$ip=`echo $line | awk '{print $1}'`
 						echo "ip = $ip"
-						$type=`echo $line | awk '{print $1}'`
+						$type=`echo $line | awk '{print $2}'`
 					done < DB
 					echo "type = $type"
 					if [ "$type" == "Devil" ];then
