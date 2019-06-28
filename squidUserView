@@ -66,7 +66,7 @@ pipeline {
 					done < DB
 					if [ "$type" == "Devil" ];then
 						ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $userSquid $passSquid
-						echo "$BUILD_USER $number $user $comment" >> report
+						echo "$BUILD_USER $number $userSquid $comment" >> report
 					else
 						echo "Это Edge router на нём нет proxy"
 					fi
