@@ -65,7 +65,7 @@ pipeline {
 						type=`echo $line | awk '{print $2}'`
 					done < DB
 					if [ "$type" == "Devil" ];then
-						#ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $user $pass
+						ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $user $pass
 						echo "$BUILD_USER $number $user $comment" >> report
 					else
 						echo "Это Edge router на нём нет proxy"
