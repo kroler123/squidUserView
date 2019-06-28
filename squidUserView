@@ -36,7 +36,8 @@ pipeline {
 				script {
 					sh (script:'''#!/bin/bash
 					while read line; do
-						echo "это = $line"
+						ip=`echo $line | awk '{print $1}'`
+						type=`echo $line | awk '{print $2}'`
 					done < DB
 					echo "type = $type"
 					if [ "$type" == "Devil" ];then
@@ -58,8 +59,8 @@ pipeline {
 				script {
 					sh (script:'''
 					while read line; do
-						$ip=`echo $line | awk '{print $1}'`
-						$type=`echo $line | awk '{print $2}'`
+						ip=`echo $line | awk '{print $1}'`
+						type=`echo $line | awk '{print $2}'`
 					done < DB
 					if [ "$type" == "Devil" ];then
 //						ssh -o \'StrictHostKeyChecking no\' root@"$ip" cat /etc/SQUID-AUTH/AddUser $user $pass
