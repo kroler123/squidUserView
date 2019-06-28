@@ -1,0 +1,73 @@
+#!groovy
+//Version 1.0 
+pipeline {
+	agent {
+		label 'master'
+	}
+	parameters {
+
+		string (name: 'number', default: 'null', label: 'Впишите номер салона')
+
+		choice (name: '',choices['view','add'], label:'view - посмотреть пользователей, add - добавить пользователя')
+
+		string (name: 'user',default: '',label: 'Впишите имя пользователя')
+
+		string (name: 'pass',default: '',label: 'Впишите пароль для нового пользователя')
+	}
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+                timestamps()
+                skipStagesAfterUnstable()
+                disableConcurrentBuilds()
+	}
+	stages {
+		stage("Скачиваем базу") {
+			steps {
+				script {
+					sh (script: 'mysql -h 192.168.102.2 -u kalinkin -p159753 -Bse "SELECT In_ip,Type FROM rbt WHERE Name = \'$number\'" -D RBT > DB',label: 'Download DB in the file \"DB\"')
+				}
+			}
+		}
+		stage("Просмотр имеющихся пользователей") {
+			steps {
+				script {
+					sh (script:'''
+					while read line; do
+						$ip=`echo $line | awk '{print $0}'`
+						$type=`echo $line | awk '{print $1}'`
+					done < DB
+					if [ "$type" == "Devil" ];then
+						ssh -o \'StrictHostKeyChecking no\' root@"$ip" cat /etc/SQUID-AUTH/InternetUsers
+					else
+						echo "Это Edge router на нём нет proxy"
+					fi
+					''',
+					label: 'Информаця о пользователе'
+					)
+				}
+			}
+		}
+		stage("Добавление нового пользователя") {
+			steps {
+				script {
+					sh (script:'''
+					while read line; do
+						$ip=`echo $line | awk '{print $0}'`
+						$type=`echo $line | awk '{print $1}'`
+					done < DB
+					if [ "$type" == "Devil" ];then
+//						ssh -o \'StrictHostKeyChecking no\' root@"$ip" cat /etc/SQUID-AUTH/AddUser $user $pass
+						echo "${BUILD_USER} $number $user" >> report
+					else
+						echo "Это Edge router на нём нет proxy"
+					fi
+					''',
+					label: 'Информаця о пользователе'
+					)
+				}
+				echo "Салон - $number ,Пользователь - $user ,Пароль - $pass"
+			}
+		}
+
+	}
+}
