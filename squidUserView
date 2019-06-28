@@ -13,6 +13,8 @@ pipeline {
 		string (name: 'user',defaultValue: '',description: 'Впишите имя пользователя')
 
 		string (name: 'pass',defaultValue: '',description: 'Впишите пароль для нового пользователя')
+
+		string (name: 'comment',defaultValue: '',description: 'Напишите обоснование для создание пользователя')
 	}
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
@@ -64,7 +66,7 @@ pipeline {
 					done < DB
 					if [ "$type" == "Devil" ];then
 						#ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $user $pass
-						echo "${BUILD_USER} $number $user" >> report
+						echo "$BUILD_USER $number $user $comment" >> report
 					else
 						echo "Это Edge router на нём нет proxy"
 					fi
