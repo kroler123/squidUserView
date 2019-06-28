@@ -57,10 +57,10 @@ pipeline {
 			when {
 				expression { params.act == "add" }
 			}
+		        wrap([$class: 'BuildUser']) {
+				sh 'echo "${BUILD_USER}"'
+			}
 			steps {
-			        wrap([$class: 'BuildUser']) {
-					sh 'echo "${BUILD_USER}"'
-				}
 				script {
 					sh (script:'''#!/bin/bash
 					while read line; do
