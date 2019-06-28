@@ -57,13 +57,13 @@ pipeline {
 			}
 			steps {
 				script {
-					sh (script:'''
+					sh (script:'''#!/bin/bash
 					while read line; do
 						ip=`echo $line | awk '{print $1}'`
 						type=`echo $line | awk '{print $2}'`
 					done < DB
 					if [ "$type" == "Devil" ];then
-//						ssh -o \'StrictHostKeyChecking no\' root@"$ip" cat /etc/SQUID-AUTH/AddUser $user $pass
+						#ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $user $pass
 						echo "${BUILD_USER} $number $user" >> report
 					else
 						echo "Это Edge router на нём нет proxy"
