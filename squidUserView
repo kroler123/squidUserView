@@ -29,10 +29,10 @@ pipeline {
 			}
 		}
 		stage("Просмотр имеющихся пользователей") {
+			when {
+				expression { params.act == "view" }
+			}
 			steps {
-				when {
-					expression { params.act == "view" }
-				}
 				script {
 					sh (script:'''
 					while read line; do
@@ -51,10 +51,10 @@ pipeline {
 			}
 		}
 		stage("Добавление нового пользователя") {
+			when {
+				expression { params.act == "add" }
+			}
 			steps {
-				when {
-					expression { params.act == "add" }
-				}
 				script {
 					sh (script:'''
 					while read line; do
