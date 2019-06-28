@@ -8,7 +8,7 @@ pipeline {
 
 		string (name: 'number', defaultValue: 'null',description: 'Впишите номер салона')
 
-		choice (name: '',choices['view','add'],description:'view - посмотреть пользователей, add - добавить пользователя')
+		choice (name: 'act',choices['view','add'],description:'view - посмотреть пользователей, add - добавить пользователя')
 
 		string (name: 'user',defaultValue: '',description: 'Впишите имя пользователя')
 
@@ -30,6 +30,9 @@ pipeline {
 		}
 		stage("Просмотр имеющихся пользователей") {
 			steps {
+				when {
+					expression { params.act == "view" }
+				}
 				script {
 					sh (script:'''
 					while read line; do
@@ -49,6 +52,9 @@ pipeline {
 		}
 		stage("Добавление нового пользователя") {
 			steps {
+				when {
+					expression { params.act == "add" }
+				}
 				script {
 					sh (script:'''
 					while read line; do
