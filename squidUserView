@@ -65,8 +65,12 @@ pipeline {
 						type=`echo $line | awk '{print $2}'`
 					done < DB
 					if [ "$type" == "Devil" ];then
-						ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $userSquid $passSquid
-						echo "$BUILD_USER $number $userSquid $comment" >> report
+						if [ "$comment" != "" ];then
+							ssh -o \'StrictHostKeyChecking no\' root@$ip /etc/SQUID-AUTH/AddUser $userSquid $passSquid
+							echo "$BUILD_USER $number $userSquid $comment" >> report
+						else
+							echo "Вы не вписали обоснование для создания пользователя"
+						fi
 					else
 						echo "Это Edge router на нём нет proxy"
 					fi
